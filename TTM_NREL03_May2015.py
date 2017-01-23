@@ -11,9 +11,9 @@ import numpy as np
 # User input and customization
 
 # The file to load:
-fname = './example_data/vector_data_imu01.vec'
+fname = '/Users/lillie/turbulence_data/raw_data/TTM_NREL03_May2015.VEC'
 # This file is available at:
-# http://goo.gl/yckXtG
+# http://goo.gl/yckXtGk
 
 # This is the vector from the ADV head to the body frame, in meters,
 # in the ADV coordinate system.
@@ -104,7 +104,7 @@ ax.set_xlim([dt.date2num(dt.datetime.datetime(2012, 6, 12, 12)),
              dt.date2num(dt.datetime.datetime(2012, 6, 12, 12, 30))])
 
 # Save the figure:
-fig.savefig('./fig/crop_data.pdf')
+fig.savefig('/Users/lillie/turbulence_data/plots/crop_data.pdf')
 # end cropping figure
 ####
 
@@ -185,4 +185,4 @@ ax.text(4, 4e-4, 'Doppler noise', va='bottom', ha='center',
         #bbox=dict(facecolor='w', alpha=0.9, edgecolor='none'),
         zorder=20)
 
-fig2.savefig('./fig/motion_vel_spec.pdf')
+fig2.savefig('/Users/lillie/turbulence_data/plots/motion_vel_spec.pdf')
