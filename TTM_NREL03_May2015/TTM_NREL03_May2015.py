@@ -74,35 +74,33 @@ ax.text(0.55, 0.95,
         )
 
 # Add some annotations:
-ax.axvspan(dt.date2num(dt.datetime.datetime(2012, 6, 12, 12)),
-           t_range[0], zorder=-10, facecolor='0.9',
-           edgecolor='none')
-ax.text(0.13, 0.9, 'Mooring falling\ntoward seafloor',
+# ax.axvspan(dt.date2num(dt.datetime.datetime(2012, 6, 12, 12)),
+#            t_range[0], zorder=-10, facecolor='0.9',
+#            edgecolor='none')
+ax.text(0.13, 1.0, 'Mooring falling\ntoward seafloor',
         ha='center', va='top', transform=ax.transAxes,
         size='small')
-ax.text(t_range[0] + 0.0001, 0.6, 'Mooring on seafloor',
-        size='small',
-        ha='left')
-ax.annotate('', (t_range[0] + 0.006, 0.3),
-            (t_range[0], 0.3),
-            arrowprops=dict(facecolor='black', shrink=0.0),
-            ha='right')
+ax.text(0.3, 0.6, 'Mooring on seafloor',
+        ha='center', va='top', transform=ax.transAxes,
+        size='small')
+ax.annotate('', (0.25, 0.4), (0.4, 0.4),
+            arrowprops=dict(facecolor='black'))
 
 # Finalize the figure
-# Format the time axis:
-tkr = dt.MinuteLocator(interval=5)
-frmt = dt.DateFormatter('%H:%M')
-ax.xaxis.set_major_locator(tkr)
-ax.xaxis.set_minor_locator(dt.MinuteLocator(interval=1))
-ax.xaxis.set_major_formatter(frmt)
-ax.set_ylim([-3, 3])
+#Format the time axis:
+# tkr = dt.MinuteLocator(interval=5)
+# frmt = dt.DateFormatter('%H:%M')
+# ax.xaxis.set_major_locator(tkr)
+# ax.xaxis.set_minor_locator(dt.MinuteLocator(interval=1))
+# ax.xaxis.set_major_formatter(frmt)
+# ax.set_ylim([-3, 3])
 
 # Label the axes:
 ax.set_ylabel('$u\,\mathrm{[m/s]}$', size='large')
 ax.set_xlabel('Time [June 12, 2012]')
 ax.set_title('Data cropping and cleaning')
-ax.set_xlim([dt.date2num(dt.datetime.datetime(2012, 6, 12, 12)),
-             dt.date2num(dt.datetime.datetime(2012, 6, 12, 12, 30))])
+# ax.set_xlim([dt.date2num(dt.datetime.datetime(2012, 6, 12, 12)),
+#              dt.date2num(dt.datetime.datetime(2012, 6, 12, 12, 30))])
 
 # Save the figure:
 fig.savefig('/Users/lillie/turbulence_data/plots/crop_data.pdf')
@@ -148,7 +146,10 @@ ax.loglog(dat_cln_bin.freq, dat_cln_bin.Suu_hz.mean(0),
           'r-', label='no motion correction')
 
 # Add some annotations
+
+# adds the solid horizontal black line
 ax.axhline(1.7e-4, color='k', zorder=21)
+
 ax.text(2e-3, 1.7e-4, 'Doppler noise level', va='bottom', ha='left',)
 
 ax.text(1, 2e-2, 'Motion\nCorrection')
@@ -187,3 +188,4 @@ ax.text(4, 4e-4, 'Doppler noise', va='bottom', ha='center',
         zorder=20)
 
 fig2.savefig('/Users/lillie/turbulence_data/plots/motion_vel_spec.pdf')
+
