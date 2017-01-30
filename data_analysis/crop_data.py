@@ -29,7 +29,7 @@ def t_set(advr, n_bin, n_fft=None):
 
     timeset = []
     for i, j in zip(u_var, out.mpltime):
-        if i < 0:
+        if i < 1:
             timeset.append(j)
 
     start = timeset[0]

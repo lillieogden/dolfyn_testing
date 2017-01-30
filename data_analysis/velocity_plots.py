@@ -3,6 +3,7 @@
 import dolfyn.adv.api as avm
 from crop_data import t_set
 
+
 # Import matplotlib tools for plotting the data:
 from matplotlib import pyplot as plt
 import matplotlib.dates as dt
@@ -38,12 +39,11 @@ def motion(dat, dat_cln, accel_filter):
     avm.rotate.earth2principal(dat)
     avm.rotate.earth2principal(dat_cln)
 
-
-# At any point you can save the data:
-# dat_bin.save('adv_data_rotated2principal.h5')
+    # save the data
+    dat.save('TTM_NREL03_May2015_rotated2principal.h5')
 
 # And reload the data:
-# dat_bin_copy = avm.load('adv_data_rotated2principal.h5')
+# dat_bin_copy = avm.load('TTM_NREL03_May2015_rotated2principal.h5')
 
 
 def crop_plot(dat_raw, dat, t_range_inds, t_range):
@@ -94,7 +94,7 @@ def crop_plot(dat_raw, dat, t_range_inds, t_range):
     #              dt.date2num(dt.datetime.datetime(2012, 6, 12, 12, 30))])
 
     # Save the figure:
-    fig.savefig('/Users/lillie/turbulence_data/plots/crop_data.pdf')
+    fig.savefig('/Users/lillie/turbulence_data/plots/TTM_NREL03_May2015/crop_data.pdf')
     # end cropping figure
 
 
@@ -152,7 +152,7 @@ def spectra(dat_bin, dat_cln_bin):
             # bbox=dict(facecolor='w', alpha=0.9, edgecolor='none'),
             zorder=20)
 
-    fig2.savefig('/Users/lillie/turbulence_data/plots/motion_vel_spec.pdf')
+    fig2.savefig('/Users/lillie/turbulence_data/plots/TTM_NREL03_May2015/motion_vel_spec.pdf')
 
 
 def turb_energy(dat_cln_bin):
@@ -172,7 +172,7 @@ def turb_energy(dat_cln_bin):
     ax.set_xlabel('Time')
     ax.set_ylabel('Turbulent Energy $\mathrm{[m^2/s^2]}$', size='large')
 
-    fig.savefig('/Users/lillie/turbulence_data/plots/turb_energy_spec.pdf')
+    fig.savefig('/Users/lillie/turbulence_data/plots/TTM_NREL03_May2015/turb_energy_spec.pdf')
 
 
 def reynolds_stress(dat_cln_bin):
@@ -192,7 +192,7 @@ def reynolds_stress(dat_cln_bin):
     ax.set_xlabel('Time')
     ax.set_ylabel('Reynolds Stresses $\mathrm{[m^2/s^2]}$', size='large')
 
-    fig.savefig('/Users/lillie/turbulence_data/plots/reynolds_stress.pdf')
+    fig.savefig('/Users/lillie/turbulence_data/plots/TTM_NREL03_May2015/reynolds_stress.pdf')
 
 
 def main():
@@ -201,15 +201,18 @@ def main():
 
     # The file to load:
     fname = '/Users/lillie/turbulence_data/raw_data/TTM_NREL03_May2015.VEC'
+    name = 'TTM_NREL03_May2015'
     # Read a file containing the adv data specified above:
     dat_raw = avm.read_nortek(fname)
 
     # This is the vector from the ADV head to the body frame, in meters, in the ADV coordinate system.
     body2head_vec = np.array([9.75, 2, -5.75]) * 0.0254
+    # = np.array([0.48,-0.07, -0.27])
 
     # This is the orientation matrix of the ADV head relative to the body.
     # In this case the head was aligned with the body, so it is the identity matrix:
     body2head_rotmat = np.array([[0, 0, -1], [0, -1, 0], [-1, 0, 0]])
+    # = np.eye(3)
 
     # the time range of interest
     # 1. look at a plot of dat.u versus dat.mpltime and can visually see where the data should be cropped
@@ -227,11 +230,11 @@ def main():
     # crop and clean the data
     dat, dat_cln, t_range_inds = crop_clean(t_range, dat_raw, body2head_rotmat, body2head_vec)
 
-    # create a velocity distribution, illustrating the cropping and cleaning process
-    crop_plot(dat_raw, dat, t_range_inds, t_range)
-
     # perform motion correction
     motion(dat, dat_cln, accel_filter)
+
+    # create a velocity distribution, illustrating the cropping and cleaning process
+    crop_plot(dat_raw, dat, t_range_inds, t_range)
 
     # Average the data and compute turbulence statistics
     dat_bin = avm.calc_turbulence(dat, n_bin=19200,

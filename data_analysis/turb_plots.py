@@ -13,7 +13,7 @@ import numpy as np
 # User input and customization
 
 # The file to load:
-fname = '/Users/lillie/turbulence_data/raw_data/TTM_NREL03_May2015.VEC'
+fname = '/Users/lillie/turbulence_data/raw_data/data_analysis.VEC'
 # This file is available at:
 # http://goo.gl/yckXtGk
 
